@@ -1,0 +1,66 @@
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="#">
+
+<body bgcolor="khaki">
+    <div class="w3-bar w3-red">
+        <button onclick="document.getElementById('id01').style.display='block'" class="w3-display-topright w3-button w3-cyan">
+            <img src="./images/img_avatar4.png" class="w3-circle" alt="Alps" width=30 height=30>
+        </button>
+    </div>
+
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+            <div class="w3-center"><br>        
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-transparent w3-display-topright" title="Close">×</span>    
+                <img src="./images/img_avatar4.png" alt="Avatar" style="width:30%" class="w3-circle w3-margin-top">
+            </div>
+
+            <form class="w3-container" action="./admin/index.php" method=post>
+                <div class="w3-section">
+                    <div id="konten">
+                    <button class="w3-button w3-block w3-cyan w3-section w3-padding" type="submit">ADMIN</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="w3-container w3-border-top w3-padding-16 w3-light-blue">
+                <center>Klik ADMIN untuk masuk ke Administrator
+            </div>
+        </div>
+    </div>
+    <div class="w3-container w3-hover-yellow w3-teal">
+        <h1 align="center">Buku Kualitas Terbaik</h1>
+    </div>
+    <div class="w3-row-padding w3-margin-top">
+        <?php
+        require ("koneksi.php");
+        $sql="select * from barang";
+        $hasil=mysqli_query($conn,$sql);
+        $row=mysqli_fetch_row($hasil);
+        $n=1;
+        do{list($kodebrg,$namabarang,$harga,$stok)=$row;
+         ?>
+        <div class="w3-third">
+            <div class="w3-card w3-pale-green">
+                <br>
+                <?php 
+                echo "<center><img src='./images/$kodebrg.jpg' width=80% height=50%></center>";
+                ?>
+                <div class="w3-container w3-center">
+                    <?php
+                    echo "<h5>$namabarang<br>Rp.";
+                    echo number_format($harga,2,",",".");
+                    echo "<br>Stok : $stok</h5>";
+                    echo "<a class='w3-btn w3-cyan' href='index.php?p=belisekarang&kodebrg=$kodebrg'> Beli Sekarang </a>";
+                    ?>
+                </div>
+                <br>
+            </div>
+            <br>
+        </div>
+        <?php
+        }
+        while($row=mysqli_fetch_row($hasil));
+        ?>
+    </div>
